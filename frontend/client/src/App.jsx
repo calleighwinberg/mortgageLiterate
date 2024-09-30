@@ -12,33 +12,25 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import axios from 'axios'
 import Home from './views/home';
+import Index from './views/index';
 
 function App() {
-  const [array, setArray] = useState([]);
+
   
-
-  const fetchAPI = async () => {
-    const response = await axios.get('http://localhost:8080/api');
-    setArray(response.data.fruits);
-    console.log(response.data.fruits);
-  };
-
   const fetchHome = async () => {
     const response = await axios.get('http://localhost:8080/home');
   };
 
-  useEffect(() => {
-    fetchAPI()
-  }, []); //empty array ensure useEffects onyl runs on intial  rendering 
 
   return (
       <BrowserRouter>
         <Routes>
             <Route path="/" element={<Home/>}></Route>
+            <Route path="/tcas" element={<Index/>}></Route>
         </Routes>
       </BrowserRouter>
       
   )
 }
 
-export default App
+export default App ;

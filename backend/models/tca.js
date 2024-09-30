@@ -1,4 +1,5 @@
-const mongoose = require('mongoose');
+//const mongoose = require('mongoose');
+import mongoose from "mongoose" ;
 const Schema = mongoose.Schema;
 
 const TCASchema = new Schema({
@@ -77,4 +78,5 @@ const TCASchema = new Schema({
     }
 })
 
-module.exports = mongoose.model('TCA', TCASchema)
+//module.exports = mongoose.model('TCA', TCASchema)
+export default mongoose.model("TCA", TCASchema) ;
