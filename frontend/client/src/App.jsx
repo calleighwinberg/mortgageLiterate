@@ -13,6 +13,9 @@ import './App.css'
 import axios from 'axios'
 import Home from './views/home';
 import Index from './views/index';
+import Show from './views/Show' ;
+import New from './views/New' ;
+import Edit from './views/Edit' ;
 
 function App() {
 
@@ -27,6 +30,9 @@ function App() {
         <Routes>
             <Route path="/" element={<Home/>}></Route>
             <Route path="/tcas" element={<Index/>}></Route>
+            <Route path="/tcas/:tcaid" element={<Show/>}></Route>
+            <Route path="/tcas/:tcaid/edit" element={<Edit/>}></Route>
+            <Route path="/new" element={<New/>}></Route>
         </Routes>
       </BrowserRouter>
       

@@ -13,11 +13,15 @@ const TCAs = () => {
     return (
         <>
         <h1>All TCAs</h1>
+        <a href="/new"> New tca </a>
         <ul>
             {tcas?.length ? (
-                tcas.map((tca, idx) => <li key={idx}>tca.firstName</li>)
+                tcas.map((tca, idx) => <li key={idx}>
+                    <a href={`/tcas/${tca._id}`}>{tca.firstName}</a> </li>)
             ): <h2>No data</h2>}
         </ul>
+
+
         
         </>
       )
