@@ -14,7 +14,7 @@ const New = () => {
             description: e.target[3].value
         } ;
         console.log(tca) ;
-        await axios.post("http://localhost:8080/tcas/new", tca).then((res) => {
+        await axios.post("/tcas/new", tca).then((res) => {
             navigate(`/tcas/${res.data}`)
             console.log(res.data) ;
         });

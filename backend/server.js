@@ -1,10 +1,5 @@
 import express from "express" ;
-//const express = require('express');
-//const path = require('path');
-//const ejsMate = require('ejs-mate');
-//const cors = require("cors");
 import cors from "cors" ;
-//const mongoose = require('mongoose');
 import bodyParser from "body-parser";
 import mongoose from "mongoose" ;
 import TCA from './models/tca.js';
@@ -24,15 +19,8 @@ db.once("open", () => {
 });
 
 app.use(cors(corsOptions));
-//app.use(bodyParser.urlencoded({ extended: false })) ;
 app.use(bodyParser.json());
-//var jsonParser = bodyParser.json() ;
-//app.use(bodyParser.urlencoded({extended: false}));
-//app.use(cors({ credentials: true, origin: 'http://localhost:5173' }));
-//app.use(cors({ origin: '*', }));
-//app.engine('ejs', ejsMate) ;
-//app.set('view engine', 'ejs') ;
-//app.set('views', path.join(__dirname, 'views')) ;
+
 
 app.get('/tcas', async (req, res) => { //route for index page
     const tcas = await TCA.find({})
@@ -48,8 +36,6 @@ app.post("/tcas/new", async (req, res) => {
 
 app.get("/newTCA", async (req, res) => {         //post route to create a new TCA
     const tca = new TCA({firstName: 'calleigh'})
-    //const tca = new TCA(req.body.tca);
-    //tca.author = req.user._id;
     await tca.save();
     res.send(tca) ;
     //req.flash('success', 'Successfully made a new Financing Analysis') ;
@@ -66,6 +52,11 @@ app.get("/tcas/:id", async (req, res) => { //get route to show dislay page
 app.post("/tcas/:id/edit", async(req,res) => {
     const tca = await TCA.findByIdAndUpdate(req.params.id, {...req.body}) ;
     res.send(tca._id);
+}) ;
+
+app.get("/tcas/:id/delete", async (req,res) => {
+    const tca = await TCA.findByIdAndDelete(req.params.id)
+    res.status(200).send("deleted")
 })
 
 

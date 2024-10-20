@@ -8,7 +8,7 @@ const Edit = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/tcas/${tcaid}`).then((res) => {
+        axios.get(`/tcas/${tcaid}`).then((res) => {
             setTCA(res.data.tca) ;
         });
     });
@@ -23,7 +23,7 @@ const Edit = () => {
             description: e.target[3].value
         } ;
         console.log(tca) ;
-        await axios.post(`http://localhost:8080/tcas/${tcaid}/edit`, tca).then((res) => {
+        await axios.post(`/tcas/${tcaid}/edit`, tca).then((res) => {
             console.log(res.data) ;
             navigate(`/tcas/${res.data}`)
             

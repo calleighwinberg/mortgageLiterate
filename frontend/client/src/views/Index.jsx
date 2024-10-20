@@ -5,7 +5,7 @@ const TCAs = () => {
     const [tcas, setTCAs] = useState([])
 
     useEffect(() => {
-        axios.get("http://localhost:8080/tcas").then((res) => {
+        axios.get("/tcas").then((res) => {
             setTCAs(res.data.tcas) ;
         }) ;
     }, []) ;

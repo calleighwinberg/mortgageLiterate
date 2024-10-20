@@ -1,16 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from "react-router" ;
+import { useNavigate, useParams } from "react-router" ;
 import axios from 'axios';
 
 const Show = () => {
     const [tca, setTCA] = useState();
     const {tcaid}  = useParams() ;
+    const navigate = useNavigate()
+
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/tcas/${tcaid}`).then((res) => {
+        axios.get(`/tcas/${tcaid}`).then((res) => {
             setTCA(res.data.tca) ;
         });
     });
+
+    const onDeleteClick = () => {
+        axios.get(`/tcas/${tcaid}/delete`).then((res) => {
+            if (res.status == 200) {
+                navigate("/tcas")
+            }
+        })
+    }
 
     return (
         <>
@@ -21,6 +31,7 @@ const Show = () => {
         }
         <a href={`/tcas/${tcaid}/edit`}> Edit tca</a>
         <br/>
+        <button onClick = {onDeleteClick}> Delete TCA </button>
         <a href="/tcas"> All tcas </a>
         </>
     )

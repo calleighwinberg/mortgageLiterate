@@ -10,16 +10,17 @@ import {
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import axios from 'axios'
+import axios from 'axios' ;
 import Home from './views/home';
 import Index from './views/index';
 import Show from './views/Show' ;
 import New from './views/New' ;
 import Edit from './views/Edit' ;
 
-function App() {
 
-  
+axios.defaults.baseURL = "http://localhost:8080" ;
+
+function App() {
   const fetchHome = async () => {
     const response = await axios.get('http://localhost:8080/home');
   };
