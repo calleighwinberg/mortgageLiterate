@@ -15,7 +15,7 @@ const Sidebar = ({ tca }) => {
   const [openP3, setOpenP3] = useState(false);
 
   return (
-    <div className="bg-dark min-vh-100 d-flex flex-column p-3 text-light" style={{ width: '185px' }}>
+    <div className="bg-dark min-vh-100 d-flex flex-column p-3 text-light" style={{ width: '200px' }}>
       {/* Sidebar Header */}
       <div className="mb-4">
         <div className="fs-5">This presentation is for</div>
