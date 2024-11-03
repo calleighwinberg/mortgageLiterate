@@ -12,6 +12,7 @@ const TCAs = () => {
 
     return (
         <>
+        <main className="container mt-5">
         <h1>All TCAs</h1>
         <a href="/new"> New tca </a>
         <ul>
@@ -20,6 +21,7 @@ const TCAs = () => {
                     <a href={`/tcas/${tca._id}`}>{tca.firstName}</a> </li>)
             ): <h2>No data</h2>}
         </ul>
+        </main>
 
 
         

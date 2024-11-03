@@ -24,6 +24,7 @@ const Show = () => {
 
     return (
         <>
+        <main className="container mt-5">
         {tca ? <>
             <h1>{tca.firstName}</h1>
             </> : <h1> No Data</h1>
@@ -33,6 +34,7 @@ const Show = () => {
         <br/>
         <button onClick = {onDeleteClick}> Delete TCA </button>
         <a href="/tcas"> All tcas </a>
+        </main>
         </>
     )
 };

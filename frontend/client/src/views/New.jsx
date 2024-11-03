@@ -23,6 +23,7 @@ const New = () => {
 
     return (
         <>
+        <main className="container mt-5">
             <form onSubmit={onFormSubmit}>
                 <div className="mb-3">
                     <label className="form-label" htmlFor="name">First Name</label>
@@ -47,6 +48,7 @@ const New = () => {
                 </div>
             </form>
             <a href="/tcas"> All TCAS </a>
+            </main>
         </>
     );
 };
