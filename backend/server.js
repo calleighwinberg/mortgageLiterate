@@ -50,6 +50,7 @@ app.get("/tcas/:id", async (req, res) => { //get route to show dislay page
 }) ;
 
 app.post("/tcas/:id/edit", async(req,res) => {
+    console.log(req.body)
     const tca = await TCA.findByIdAndUpdate(req.params.id, {...req.body}) ;
     res.send(tca._id);
 }) ;
