@@ -1,129 +1,137 @@
+
+
+import Container from 'react-bootstrap/Container';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import './Sidebar.css';
+
+
+// Sidebar.js
 import React, { useState } from 'react';
-import {
-  Drawer,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  Collapse,
-  Typography,
-  Box,
-  IconButton,
-} from '@mui/material';
-import { ExpandLess, ExpandMore, Person, Description, ViewQuilt } from '@mui/icons-material';
+import { Nav, Button, Collapse } from 'react-bootstrap';
 
 const Sidebar = ({ tca, onSelection }) => {
-  const [openP1, setOpenP1] = useState(false);
-  const [openP2, setOpenP2] = useState(false);
-  const [openP3, setOpenP3] = useState(false);
+    // State to control collapsible sections
+    const [openP1, setOpenP1] = useState(false);
+    const [openP2, setOpenP2] = useState(false);
+    const [openP3, setOpenP3] = useState(false);
 
-  const handleToggle = (setSection, otherSections) => {
-    setSection((prev) => !prev);
-    otherSections.forEach((setOther) => setOther(false));
-  };
+    return (
+        <div className="bg-dark min-vh-100 d-flex flex-column p-3 text-light" style={{ width: '200px' }}>
 
-  return (
-    <Drawer
-      variant="permanent"
-      anchor="left"
-      sx={{
-        width: 240,
-        flexShrink: 0,
-        '& .MuiDrawer-paper': { width: 240, boxSizing: 'border-box', backgroundColor: '#333', color: '#fff' },
-      }}
-    >
-      <Box sx={{ p: 2 }}>
-        <Typography variant="h6">This presentation is for</Typography>
-        <Typography variant="subtitle1" fontWeight="bold">
-          {tca.firstName} {tca.lastName}
-        </Typography>
-      </Box>
+            {/* Sidebar Header */}
+            <div className="mb-4">
+                <div className="fs-5">This presentation is for</div>
+                <p className="fw-bold">{tca.firstName} {tca.lastName}</p>
+            </div>
 
-      <List>
-        {/* Client Section */}
-        <ListItem disablePadding>
-          <ListItemButton onClick={() => onSelection('client')}>
-            <Person sx={{ mr: 2 }} />
-            <ListItemText primary="Client" />
-          </ListItemButton>
-        </ListItem>
+            {/* Sidebar Menu */}
+            <Nav className="flex-column" variant="pills">
+                <Nav.Link onClick={() => onSelection("client")} className="text-light">
+                    <i className="bi bi-person-fill"></i>
+                    <span className="fs-4 ms-3 d-none d-sm-inline">Client</span>
+                </Nav.Link>
 
-        {/* Product 1 */}
-        <ListItem disablePadding>
-          <ListItemButton onClick={() => {
-            onSelection("product1-main");
-            handleToggle(setOpenP1, [setOpenP2, setOpenP3])
-            }}>
-            <Description sx={{ mr: 2 }} />
-            <ListItemText primary="Product 1" />
-            {openP1 ? <ExpandLess /> : <ExpandMore />}
-          </ListItemButton>
-        </ListItem>
-        <Collapse in={openP1} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItemButton sx={{ pl: 4 }} onClick={() => onSelection('product1-closingCosts')}>
-              <ListItemText primary="Closing Costs" />
-            </ListItemButton>
-            <ListItemButton sx={{ pl: 4 }} onClick={() => onSelection('product1-monthlyCosts')}>
-              <ListItemText primary="Monthly Costs" />
-            </ListItemButton>
-          </List>
-        </Collapse>
+                {/* Product 1 */}
+                <Button
+                    onClick={() => {
+                        onSelection("product1-main"); // Trigger main form display for Product 1
+                        setOpenP1(!openP1); // Toggle dropdown visibility
+                        setOpenP2(false)
+                        setOpenP3(false)
+                    }}
+                    aria-controls="p1-collapse"
+                    aria-expanded={openP1}
+                    className="text-start w-100 text-light"
+                    variant="link"
+                >
+                    <i className="bi bi-file-earmark-text"></i>
+                    <span className="fs-4 ms-3">Product 1</span>
+                    <i className="bi bi-caret-down-fill float-end"></i>
+                </Button>
+                <Collapse in={openP1}>
+                    <div id="p1-collapse">
+                        <Nav className="flex-column ms-3">
+                            <Button variant="link" className="text-light text-start w-100" onClick={() => onSelection("product1-closingCosts")}>
+                                Closing Costs
+                            </Button>
+                            <Button variant="link" className="text-light text-start w-100" onClick={() => onSelection("product1-monthlyCosts")}>
+                                Monthly Costs
+                            </Button>
+                        </Nav>
+                    </div>
+                </Collapse>
 
-        {/* Product 2 */}
-        <ListItem disablePadding>
-          <ListItemButton onClick={() => {
-            onSelection("product1-main");
-            handleToggle(setOpenP2, [setOpenP1, setOpenP3])
-            }}>
-            <Description sx={{ mr: 2 }} />
-            <ListItemText primary="Product 2" />
-            {openP2 ? <ExpandLess /> : <ExpandMore />}
-          </ListItemButton>
-        </ListItem>
-        <Collapse in={openP2} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItemButton sx={{ pl: 4 }} onClick={() => onSelection('product2-closingCosts')}>
-              <ListItemText primary="Closing Costs" />
-            </ListItemButton>
-            <ListItemButton sx={{ pl: 4 }} onClick={() => onSelection('product2-monthlyCosts')}>
-              <ListItemText primary="Monthly Costs" />
-            </ListItemButton>
-          </List>
-        </Collapse>
+                {/* Product 2 */}
+                <Button
+                    onClick={() => {
+                        onSelection("product2-main"); // Trigger main form display for Product 2
+                        setOpenP2(!openP2)
+                        setOpenP1(false)
+                        setOpenP3(false)
+                    
+                    }}
+                    aria-controls="p2-collapse"
+                    aria-expanded={openP2}
+                    className="text-start w-100 text-light"
+                    variant="link"
+                >
+                    <i className="bi bi-file-earmark-text"></i>
+                    <span className="fs-4 ms-3">Product 2</span>
+                    <i className="bi bi-caret-down-fill float-end"></i>
+                </Button>
+                <Collapse in={openP2}>
+                    <div id="p2-collapse">
+                        <Nav className="flex-column ms-3">
+                            <Button variant="link" className="text-light text-start w-100" onClick={() => onSelection("product2-closingCosts")}>
+                                Closing Costs
+                            </Button>
+                            <Button variant="link" className="text-light text-start w-100" onClick={() => onSelection("product2-monthlyCosts")}>
+                                Monthly Costs
+                            </Button>
+                        </Nav>
+                    </div>
+                </Collapse>
 
-        {/* Product 3 */}
-        <ListItem disablePadding>
-          <ListItemButton onClick={() => {
-            onSelection("product1-main");
-            handleToggle(setOpenP3, [setOpenP1, setOpenP2])
-          }}>
-            <Description sx={{ mr: 2 }} />
-            <ListItemText primary="Product 3" />
-            {openP3 ? <ExpandLess /> : <ExpandMore />}
-          </ListItemButton>
-        </ListItem>
-        <Collapse in={openP3} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItemButton sx={{ pl: 4 }} onClick={() => onSelection('product3-closingCosts')}>
-              <ListItemText primary="Closing Costs" />
-            </ListItemButton>
-            <ListItemButton sx={{ pl: 4 }} onClick={() => onSelection('product3-monthlyCosts')}>
-              <ListItemText primary="Monthly Costs" />
-            </ListItemButton>
-          </List>
-        </Collapse>
+                {/* Product 3 */}
+                <Button
+                    onClick={() => {
+                        onSelection("product3-main"); // Trigger main form display for Product 3
+                        setOpenP3(!openP3)
+                        setOpenP1(false)
+                        setOpenP2(false)
+                    }}
+                    aria-controls="p3-collapse"
+                    aria-expanded={openP3}
+                    className="text-start w-100 text-light"
+                    variant="link"
+                >
+                    <i className="bi bi-file-earmark-text"></i>
+                    <span className="fs-4 ms-3">Product 3</span>
+                    <i className="bi bi-caret-down-fill float-end"></i>
+                </Button>
+                <Collapse in={openP3}>
+                    <div id="p3-collapse">
+                        <Nav className="flex-column ms-3">
+                            <Button variant="link" className="text-light text-start w-100" onClick={() => onSelection("product3-closingCosts")}>
+                                Closing Costs
+                            </Button>
+                            <Button variant="link" className="text-light text-start w-100" onClick={() => onSelection("product3-monthlyCosts")}>
+                                Monthly Costs
+                            </Button>
+                        </Nav>
+                    </div>
+                </Collapse>
 
-        {/* Presentation View */}
-        <ListItem disablePadding>
-          <ListItemButton onClick={() => onSelection('presentationView')}>
-            <ViewQuilt sx={{ mr: 2 }} />
-            <ListItemText primary="Presentation View" />
-          </ListItemButton>
-        </ListItem>
-      </List>
-    </Drawer>
-  );
+                {/* Presentation View */}
+                <Nav.Link onClick={() => onSelection("presentationView")} className="text-light">
+                    <i className="bi bi-easel"></i>
+                    <span className="fs-4 ms-3 d-none d-sm-inline">Presentation View</span>
+                </Nav.Link>
+            </Nav>
+        </div>
+    );
 };
 
 export default Sidebar;
+
