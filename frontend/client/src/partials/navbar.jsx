@@ -1,41 +1,86 @@
-import React from "react";
-
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
+import React, { useState } from 'react';
+import { AppBar, Toolbar, Typography, Button, Menu, MenuItem, Container, Box } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 function NavbarMain() {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [open, setOpen] = useState(false);
+
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+    setOpen(true);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    setOpen(false);
+  };
+
   return (
-    <Navbar expand="lg" className="bg-body-tertiary sticky-top">
-      <Container className="ms-3">
-        <Navbar.Brand href="/" >Mortgage Literate</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/tcas">Clients</Nav.Link>
-            <Nav.Link href="/new">New Client</Nav.Link>
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown>
-          </Nav>
-          <Nav>
-            <Nav className="ms-auto">
-            <Nav.Link href="/login">Login</Nav.Link>
-            </Nav>
-          </Nav>
-        </Navbar.Collapse>
+    <Box>
+    <AppBar position="fixed" color="transparent" sx={{ boxShadow: 2 }}>
+      <Container>
+        <Toolbar>
+          <Typography variant="h6" component={Link} to="/" sx={{ textDecoration: 'none', color: 'inherit' }}>
+            Mortgage Literate
+          </Typography>
+
+          <Button
+            color="inherit"
+            onClick={handleMenuOpen}
+            sx={{ marginLeft: 2 }}
+          >
+            Dropdown
+          </Button>
+          <Menu
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleMenuClose}
+            MenuListProps={{
+              'aria-labelledby': 'dropdown-button',
+            }}
+          >
+            <MenuItem onClick={handleMenuClose}>Action</MenuItem>
+            <MenuItem onClick={handleMenuClose}>Another action</MenuItem>
+            <MenuItem onClick={handleMenuClose}>Something</MenuItem>
+            <MenuItem onClick={handleMenuClose}>Separated link</MenuItem>
+          </Menu>
+
+          <Button
+            color="inherit"
+            component={Link}
+            to="/"
+            sx={{ marginLeft: 'auto' }}
+          >
+            Home
+          </Button>
+          <Button
+            color="inherit"
+            component={Link}
+            to="/tcas"
+          >
+            Clients
+          </Button>
+          <Button
+            color="inherit"
+            component={Link}
+            to="/new"
+          >
+            New Client
+          </Button>
+          <Button
+            color="inherit"
+            component={Link}
+            to="/login"
+            sx={{ marginLeft: 2 }}
+          >
+            Login
+          </Button>
+        </Toolbar>
       </Container>
-    </Navbar>
+    </AppBar>
+    </Box>
   );
 }
-export default NavbarMain
+
+export default NavbarMain;

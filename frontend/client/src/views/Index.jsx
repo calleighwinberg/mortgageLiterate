@@ -1,32 +1,64 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import {
+  Box,
+  Typography,
+  Button,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Link as MuiLink,
+} from '@mui/material';
 
 const TCAs = () => {
-    const [tcas, setTCAs] = useState([])
+  const [tcas, setTCAs] = useState([]);
 
-    useEffect(() => {
-        axios.get("/tcas").then((res) => {
-            setTCAs(res.data.tcas) ;
-        }) ;
-    }, []) ;
+  useEffect(() => {
+    axios.get('/tcas').then((res) => {
+      setTCAs(res.data.tcas);
+    });
+  }, []);
 
-    return (
-        <>
-        <main className="container mt-5">
-        <h1>All TCAs</h1>
-        <a href="/new"> New tca </a>
-        <ul>
-            {tcas?.length ? (
-                tcas.map((tca, idx) => <li key={idx}>
-                    <a href={`/tcas/${tca._id}`}>{tca.firstName}</a> </li>)
-            ): <h2>No data</h2>}
-        </ul>
-        </main>
+  return (
+    <Box sx={{
+        flex: 1,
+        p: 3,
+        marginTop: '64px', // Push content below navbar
+    }}>
+      {/* Page Title */}
+      <Typography variant="h4" component="h1" gutterBottom>
+        All TCAs
+      </Typography>
 
+      {/* Link to Create New TCA */}
+      <Button
+        variant="contained"
+        color="primary"
+        href="/new"
+        sx={{ marginBottom: 2 }}
+      >
+        New TCA
+      </Button>
 
-        
-        </>
-      )
-}
+      {/* List of TCAs */}
+      {tcas?.length ? (
+        <List>
+          {tcas.map((tca, idx) => (
+            <ListItem key={idx} disablePadding>
+              <ListItemButton component="a" href={`/tcas/${tca._id}`}>
+                <ListItemText primary={tca.firstName} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      ) : (
+        <Typography variant="h6" color="textSecondary">
+          No data
+        </Typography>
+      )}
+    </Box>
+  );
+};
 
-export default TCAs
+export default TCAs;

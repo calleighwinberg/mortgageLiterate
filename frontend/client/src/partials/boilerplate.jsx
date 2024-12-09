@@ -1,16 +1,17 @@
 import React from "react";
 import { Outlet } from "react-router";
 import NavbarMain from "./navbar";
-import Sidebar from './sidebar' ;
+import { Box } from '@mui/material';
+
 
 const Boilerplate = () => {
     return (
-        <div >
+        <Box sx={{ display: "flex", flexDirection: "column", height: "100vh" }}>
             <NavbarMain />
             
                 <Outlet />
             
-        </div>
+        </Box>
     ) ;
 } ;
 
