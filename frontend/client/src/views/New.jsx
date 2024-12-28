@@ -1,54 +1,88 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from 'axios';
-import { useNavigate } from 'react-router';
+import { Box, Container, TextField, Button } from '@mui/material';
 
 const New = () => {
     const navigate = useNavigate();
     const onFormSubmit = async (e) => {
         e.preventDefault()
+        const formData = new FormData(e.target)
+ 
         const tca = {
-            firstName: e.target[0].value, 
-            lastName: e.target[1].value,
-            address: e.target[2].value,
-            description: e.target[3].value
-        } ;
-        console.log(tca) ;
+            firstName: formData.get("firstName"),
+            lastName: formData.get("lastName"),
+            address: formData.get("address"),
+            description: formData.get("description"),
+            scenarios: [
+            { name: "", price: 0, downPayment: 0, rate: 0, term: 0, cc: { aprCosts: 0, points: 0, escrowFees: 0, noAPRcosts: 0, contribution: 0 }, mc: { hoa: 0, hazIns: 0, taxes: 0, pmi: 0 } },
+            { name: "", price: 0, downPayment: 0, rate: 0, term: 0, cc: { aprCosts: 0, points: 0, escrowFees: 0, noAPRcosts: 0, contribution: 0 }, mc: { hoa: 0, hazIns: 0, taxes: 0, pmi: 0 } },
+            { name: "", price: 0, downPayment: 0, rate: 0, term: 0, cc: { aprCosts: 0, points: 0, escrowFees: 0, noAPRcosts: 0, contribution: 0 }, mc: { hoa: 0, hazIns: 0, taxes: 0, pmi: 0 } }
+        ]
+        };
+        console.log(tca);
         await axios.post("/tcas/new", tca).then((res) => {
-            navigate(`/tcas/${res.data}`)
-            console.log(res.data) ;
+            navigate(`/tcas/${res.data}/edit`)
+            console.log(res.data);
         });
 
     };
 
+    const ClientForm = () => (
+        <>
+            <TextField
+                label="First Name"
+                name="firstName"
+                fullWidth
+                margin="normal"
+                required
+            />
+            <TextField
+                label="Last Name"
+                name="lastName"
+                fullWidth
+                margin="normal"
+                required
+            />
+            <TextField
+                label="Address"
+                name="address"
+                fullWidth
+                margin="normal"
+                required
+            />
+            <TextField
+                label="Description"
+                name="description"
+                defaultValue='Below is your personal Total Cost Analysis for your home loan. Thank you for partnering with our team.'
+                fullWidth
+                margin="normal"
+                required
+            />
+            <Button type="submit" variant="contained" color="success" sx={{ mt: 2 }}>
+                Save
+            </Button>
+        </>
+    );
+
     return (
         <>
-        <main className="container mt-5">
-            <form onSubmit={onFormSubmit}>
-                <div className="mb-3">
-                    <label className="form-label" htmlFor="name">First Name</label>
-                    <input className="form-control" type="text" id="firstName" name="firstName" required />
+            <Container>
+                {/* Ensure the content is pushed below the navbar */}
+                <div className="content-container">
+                    <Box sx={{ display: "flex", flex: 1 }}>
+                        <Box sx={{
+                            flex: 1,
+                            p: 3,
+                            marginTop: '64px', // Push content below navbar
+                        }}>
+                            <form onSubmit={onFormSubmit}>
+                                <ClientForm />
+                            </form>
+                        </Box>
+                    </Box>
                 </div>
-                <div className="mb-3">
-                    <label className="form-label" htmlFor="name">Last Name</label>
-                    <input className="form-control" type="text" id="lastName" name="lastName" required />
-                </div>
-                <div className="mb-3">
-                    <label className="form-label" htmlFor="name">Address</label>
-                    <input className="form-control" type="text" id="address" name="address" required />
-                </div>
-                <div className="mb-3">
-                    <label className="form-label" htmlFor="description">Description</label>
-                    <textarea className="form-control" type="text" id="description" name="tcadescription"
-                        cols="30" rows="5" defaultValue='Below is your personal Total Cost Analysis for your home loan. Thank you for partnering with our team.'
-                        required></textarea>
-                </div>
-                <div className="mb-3">
-                    <button className="btn btn-success"> Save </button>
-                </div>
-            </form>
-            <a href="/tcas"> All TCAS </a>
-            </main>
+            </Container>
         </>
     );
 };

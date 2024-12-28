@@ -28,18 +28,25 @@ app.get('/tcas', async (req, res) => { //route for index page
     //res.render('tcas/index', {tcas})
 });
 
-app.post("/tcas/new", async (req, res) => {
+app.post("/tcas/new", async (req, res) => { //route for a new TCA
     const tca = new TCA(req.body) 
     await tca.save()
     res.send(tca._id)
 })
 
-app.get("/newTCA", async (req, res) => {         //post route to create a new TCA
-    const tca = new TCA({firstName: 'calleigh'})
-    await tca.save();
-    res.send(tca) ;
-    //req.flash('success', 'Successfully made a new Financing Analysis') ;
-    //res.redirect(`/tcas/${tca._id}/edit`);
+// app.get("/newTCA", async (req, res) => {         //post route to create a new TCA test
+//     const tca = new TCA({firstName: 'calleigh'})
+//     await tca.save();
+//     res.send(tca) ;
+//     //req.flash('success', 'Successfully made a new Financing Analysis') ;
+//     //res.redirect(`/tcas/${tca._id}/edit`);
+// }) ;
+
+
+app.post("/tcas/:id/edit", async(req,res) => {
+    console.log(req.body)
+    const tca = await TCA.findByIdAndUpdate(req.params.id, {...req.body}) ;
+    res.send(tca._id);
 }) ;
 
 app.get("/tcas/:id", async (req, res) => { //get route to show dislay page 
@@ -47,12 +54,6 @@ app.get("/tcas/:id", async (req, res) => { //get route to show dislay page
     //const tca = await TCA.findById(req.params.id).populate('author') ;
     //res.render('tcas/show', { tca });
     res.send({ tca });
-}) ;
-
-app.post("/tcas/:id/edit", async(req,res) => {
-    console.log(req.body)
-    const tca = await TCA.findByIdAndUpdate(req.params.id, {...req.body}) ;
-    res.send(tca._id);
 }) ;
 
 app.get("/tcas/:id/delete", async (req,res) => {

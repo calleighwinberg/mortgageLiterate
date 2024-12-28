@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import CurrencyFormat from 'react-currency-format';
 import { useNavigate, useParams } from "react-router";
 import { Container, Grid, TextField, Button, Typography, Box } from '@mui/material';
 import Sidebar from '../partials/sidebar';
+import ClientForm from '../Components/ClientForm';
+import CurrencyFormatCustom from '../Components/CurrencyFormatCustom';
+import PercentageFormatCustom from '../Components/PercentageFormatCustom';
 
 const Edit = () => {
     const [tca, setTCA] = useState({
@@ -57,45 +61,7 @@ const Edit = () => {
 
     const renderClientForm = () => (
         <>
-            <TextField
-                label="First Name"
-                name="firstName"
-                value={tca?.firstName || ""}
-                onChange={handleInputChange}
-                fullWidth
-                margin="normal"
-                required
-            />
-            <TextField
-                label="Last Name"
-                name="lastName"
-                value={tca?.lastName || ""}
-                onChange={handleInputChange}
-                fullWidth
-                margin="normal"
-                required
-            />
-            <TextField
-                label="Address"
-                name="address"
-                value={tca?.address || ""}
-                onChange={handleInputChange}
-                fullWidth
-                margin="normal"
-                required
-            />
-            <TextField
-                label="Description"
-                name="description"
-                value={tca?.description || ""}
-                onChange={handleInputChange}
-                fullWidth
-                margin="normal"
-                required
-            />
-            <Button type="submit" variant="contained" color="success" sx={{ mt: 2 }}>
-                Save Client Info
-            </Button>
+        <ClientForm tca={tca} handleInputChange={handleInputChange}/>
         </>
     );
 
@@ -114,37 +80,55 @@ const Edit = () => {
             />
             <TextField
                 label="Price"
-                type="number"
                 name={`scenarios.${index}.price`}
-                value={tca?.scenarios[index]?.price || 0}
+                value={tca?.scenarios[index]?.price === 0 ? "" : tca?.scenarios[index]?.price}
                 onChange={handleInputChange}
+                onBlur={(e) => {
+                    if (!e.target.value) handleInputChange({ target: { name: e.target.name, value: 0 } });
+                }}
                 fullWidth
                 margin="normal"
+                InputProps={{
+                    inputComponent: CurrencyFormatCustom,
+                }}
             />
             <TextField
                 label="Down Payment"
-                type="number"
                 name={`scenarios.${index}.downPayment`}
-                value={tca?.scenarios[index]?.downPayment || 0}
+                value={tca?.scenarios[index]?.downPayment === 0 ? "" : tca?.scenarios[index]?.downPayment}
                 onChange={handleInputChange}
+                onBlur={(e) => {
+                    if (!e.target.value) handleInputChange({ target: { name: e.target.name, value: 0 } });
+                }}
                 fullWidth
                 margin="normal"
+                InputProps={{
+                    inputComponent: CurrencyFormatCustom,
+                }}
             />
             <TextField
                 label="Rate"
-                type="number"
                 name={`scenarios.${index}.rate`}
-                value={tca?.scenarios[index]?.rate || 0}
+                value={tca?.scenarios[index]?.rate ? tca?.scenarios[index]?.rate : ""}
                 onChange={handleInputChange}
+                onBlur={(e) => {
+                    if (!e.target.value) handleInputChange({ target: { name: e.target.name, value: 0 } });
+                }}
                 fullWidth
                 margin="normal"
+                InputProps={{
+                    inputComponent: PercentageFormatCustom,
+                }}
             />
             <TextField
                 label="Term"
                 type="number"
                 name={`scenarios.${index}.term`}
-                value={tca?.scenarios[index]?.term || 0}
+                value={tca?.scenarios[index]?.term === 0 ? "" : tca?.scenarios[index]?.term}
                 onChange={handleInputChange}
+                onBlur={(e) => {
+                    if (!e.target.value) handleInputChange({ target: { name: e.target.name, value: 0 } });
+                }}
                 fullWidth
                 margin="normal"
             />
@@ -161,30 +145,45 @@ const Edit = () => {
             </Typography>
             <TextField
                 label="APR Costs"
-                type="number"
                 name={`scenarios.${index}.cc.aprCosts`}
-                value={tca?.scenarios[index]?.cc?.aprCosts || 0}
+                value={tca?.scenarios[index]?.cc?.aprCosts === 0 ? "" : tca?.scenarios[index]?.cc?.aprCosts}
                 onChange={handleInputChange}
+                onBlur={(e) => {
+                    if (!e.target.value) handleInputChange({ target: { name: e.target.name, value: 0 } });
+                }}
                 fullWidth
                 margin="normal"
+                InputProps={{
+                    inputComponent: CurrencyFormatCustom,
+                }}
             />
             <TextField
                 label="Points"
-                type="number"
                 name={`scenarios.${index}.cc.points`}
-                value={tca?.scenarios[index]?.cc?.points || 0}
+                value={tca?.scenarios[index]?.cc?.points ? tca?.scenarios[index]?.cc?.points : ""}
                 onChange={handleInputChange}
+                onBlur={(e) => {
+                    if (!e.target.value) handleInputChange({ target: { name: e.target.name, value: 0 } });
+                }}
                 fullWidth
                 margin="normal"
+                InputProps={{
+                    inputComponent: PercentageFormatCustom,
+                }}
             />
             <TextField
                 label="Escrow Fees"
-                type="number"
                 name={`scenarios.${index}.cc.escrowFees`}
-                value={tca?.scenarios[index]?.cc?.escrowFees || 0}
+                value={tca?.scenarios[index]?.cc?.escrowFees === 0 ? "" : tca?.scenarios[index]?.cc?.escrowFees}
                 onChange={handleInputChange}
+                onBlur={(e) => {
+                    if (!e.target.value) handleInputChange({ target: { name: e.target.name, value: 0 } });
+                }}
                 fullWidth
                 margin="normal"
+                InputProps={{
+                    inputComponent: CurrencyFormatCustom,
+                }}
             />
             <Button type="submit" variant="contained" color="success" sx={{ mt: 2 }}>
                 Save Closing Costs
@@ -199,12 +198,17 @@ const Edit = () => {
             </Typography>
             <TextField
                 label="HOA"
-                type="number"
                 name={`scenarios.${index}.mc.hoa`}
-                value={tca?.scenarios[index]?.mc?.hoa || 0}
+                value={tca?.scenarios[index]?.mc?.hoa === 0 ? "" : tca?.scenarios[index]?.mc?.hoa}
                 onChange={handleInputChange}
+                onBlur={(e) => {
+                    if (!e.target.value) handleInputChange({ target: { name: e.target.name, value: 0 } });
+                }}
                 fullWidth
                 margin="normal"
+                InputProps={{
+                    inputComponent: CurrencyFormatCustom,
+                }}
             />
             <Button type="submit" variant="contained" color="success" sx={{ mt: 2 }}>
                 Save Monthly Costs
@@ -247,8 +251,6 @@ const Edit = () => {
             <div className="content-container">
                 <Box sx={{ display: "flex", flex: 1 }}>
                     <Sidebar tca={tca} onSelection={setSelectedForm} />
-
-                    {/* Main Content Column */}
                     <Box sx={{
                         flex: 1,
                         p: 3,

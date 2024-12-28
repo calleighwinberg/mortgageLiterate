@@ -13,7 +13,7 @@ import {
 // import './App.css'
 import axios from 'axios';
 import Home from './views/home';
-import Index from './views/index';
+import Index from './views/Index';
 import Show from './views/Show';
 import New from './views/New';
 import Edit from './views/Edit';

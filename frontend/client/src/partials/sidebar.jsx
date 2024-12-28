@@ -58,7 +58,7 @@ const Sidebar = ({ tca, onSelection }) => {
             handleToggle(setOpenP1, [setOpenP2, setOpenP3])
             }}>
             <Description sx={{ mr: 2 }} />
-            <ListItemText primary="Product 1" />
+            <ListItemText primary={tca?.scenarios[0]?.name || "Product 1"} />
             {openP1 ? <ExpandLess /> : <ExpandMore />}
           </ListItemButton>
         </ListItem>
@@ -80,7 +80,7 @@ const Sidebar = ({ tca, onSelection }) => {
             handleToggle(setOpenP2, [setOpenP1, setOpenP3])
             }}>
             <Description sx={{ mr: 2 }} />
-            <ListItemText primary="Product 2" />
+            <ListItemText primary={tca?.scenarios[1]?.name || "Product 1"} />
             {openP2 ? <ExpandLess /> : <ExpandMore />}
           </ListItemButton>
         </ListItem>
@@ -102,7 +102,7 @@ const Sidebar = ({ tca, onSelection }) => {
             handleToggle(setOpenP3, [setOpenP1, setOpenP2])
           }}>
             <Description sx={{ mr: 2 }} />
-            <ListItemText primary="Product 3" />
+            <ListItemText primary={tca?.scenarios[2]?.name || "Product 1"} />
             {openP3 ? <ExpandLess /> : <ExpandMore />}
           </ListItemButton>
         </ListItem>
