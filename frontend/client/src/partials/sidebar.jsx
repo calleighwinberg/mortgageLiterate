@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Drawer,
   List,
@@ -16,6 +17,7 @@ const Sidebar = ({ tca, onSelection }) => {
   const [openP1, setOpenP1] = useState(false);
   const [openP2, setOpenP2] = useState(false);
   const [openP3, setOpenP3] = useState(false);
+  const navigate = useNavigate();
 
   const handleToggle = (setSection, otherSections) => {
     setSection((prev) => !prev);
@@ -119,7 +121,7 @@ const Sidebar = ({ tca, onSelection }) => {
 
         {/* Presentation View */}
         <ListItem disablePadding>
-          <ListItemButton onClick={() => onSelection('presentationView')}>
+        <ListItemButton onClick={() => navigate(`/tcas/${tca._id}`)}>
             <ViewQuilt sx={{ mr: 2 }} />
             <ListItemText primary="Presentation View" />
           </ListItemButton>

@@ -18,7 +18,8 @@ function NavbarMain() {
 
   return (
     <Box>
-    <AppBar position="fixed" color="transparent" sx={{ boxShadow: 2 }}>
+    <AppBar position="fixed" color="transparent" sx={{ boxShadow: 2, top: 0, // Fixed to the top of the screen
+        zIndex: 1300, backgroundColor: '#333', color: '#fff' }}>
       <Container>
         <Toolbar>
           <Typography variant="h6" component={Link} to="/" sx={{ textDecoration: 'none', color: 'inherit' }}>

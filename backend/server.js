@@ -54,6 +54,7 @@ app.get("/tcas/:id", async (req, res) => { //get route to show dislay page
     //const tca = await TCA.findById(req.params.id).populate('author') ;
     //res.render('tcas/show', { tca });
     res.send({ tca });
+
 }) ;
 
 app.get("/tcas/:id/delete", async (req,res) => {

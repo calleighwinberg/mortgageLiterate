@@ -1,18 +1,44 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import axios from 'axios';
-import { Container, Typography, Button, Box } from '@mui/material';
+import {
+  Box, Button, Card, Collapse, Grid, Modal, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography
+} from '@mui/material';
+import { computePrices } from '../../utils/computations';
+import SummaryTable from '../Components/SummaryTable';
 
 const Show = () => {
-  const [tca, setTCA] = useState(null);
+  const [tca, setTCA] = useState();
   const { tcaid } = useParams();
-  const navigate = useNavigate();
+  const navigate = useNavigate();  
+  
+  const [computedScenarios, setComputedScenarios] = useState([]);
+  const [openPaymentModal, setOpenPaymentModal] = useState(false);
+  const [openClosingCostModal, setOpenClosingCostModal] = useState(false);
 
   useEffect(() => {
+    console.log('getting tca')
     axios.get(`/tcas/${tcaid}`).then((res) => {
-      setTCA(res.data.tca);
+      setTCA({...res.data.tca});
+      console.log('tca fetched', res.data.tca)
     });
+    
   }, [tcaid]);
+  
+  useEffect(() => {
+    console.log('TCA state updated alone:', tca);  // This will log when the tca state changes
+  }, [tca]);
+
+  useEffect(() => {
+    // Only compute scenarios if `tca` is not null or undefined
+    if (tca) {
+      console.log('TCA state updated:', tca);  // Check if tca is available
+      console.log('Computing scenarios...');
+      const computedPrices = computePrices(tca);
+      console.log('Computed prices:', computedPrices);
+      setComputedScenarios(computedPrices);
+    }
+  }, [tca]);  // This effect depends on `tca` so it will run once tca is set
 
   const onDeleteClick = () => {
     axios.get(`/tcas/${tcaid}/delete`).then((res) => {
@@ -23,6 +49,7 @@ const Show = () => {
   };
 
   return (
+    
     <Box sx={{
         flex: 1,
         p: 3,
@@ -30,6 +57,67 @@ const Show = () => {
     }}>
       {tca ? (
         <>
+
+<Grid container spacing={3}>
+        {/* User and Author Info */}
+        <Grid item xs={12} md={9}>
+          <Typography variant="h3">Hi {tca.firstName},</Typography>
+          <Typography variant="h5" sx={{ color: '#ff8080' }}>
+            {tca.address}
+          </Typography>
+          <Typography>{tca.description}</Typography>
+        </Grid>
+        {/* <Grid item xs={12} md={3}>
+          <Typography>This report was created for you by</Typography>
+          <Typography variant="h6" fontWeight="bold">
+            {tca.author.username}
+          </Typography>
+          <Box display="flex" alignItems="center">
+            <i className="bi bi-envelope"></i>
+            <Typography>{tca.author.email}</Typography>
+          </Box>
+        </Grid> */}
+      </Grid>
+
+      {/* Summary and Table */}
+      <Box sx={{ marginTop: 3 }}>
+        <Box display="flex" alignItems="center" sx={{ backgroundColor: '#ff8080', padding: 2 }}>
+          <Typography variant="h5" sx={{ color: 'white' }}>Summary</Typography>
+          <Button
+            variant="contained"
+            sx={{ ml: 'auto', borderRadius: '50px', backgroundColor: '#fff', color: '#ff8080' }}
+            onClick={() => setOpenPaymentModal(true)}
+          >
+            More Info
+          </Button>
+        </Box>
+        
+        {computedScenarios && computedScenarios.length > 0 ? (
+          
+        <SummaryTable tca={tca} computedScenarios={computedScenarios} />
+      ) : (
+        <div>Loading...</div>
+      )}
+      </Box>
+
+      {/* Modals
+      <PaymentModal
+        open={openPaymentModal}
+        onClose={() => setOpenPaymentModal(false)}
+        tca={tca}
+        scenarios={scenarios}
+        onShowClosingCostModal={() => setOpenClosingCostModal(true)}
+      />
+      <ClosingCostModal
+        open={openClosingCostModal}
+        onClose={() => setOpenClosingCostModal(false)}
+        tca={tca}
+        scenarios={scenarios}
+      /> */}
+
+
+
+
           <Typography variant="h4" gutterBottom>
             {tca.firstName}
           </Typography>
@@ -58,6 +146,9 @@ const Show = () => {
               All TCAs
             </Button>
           </Box>
+
+
+
         </>
       ) : (
         <Typography variant="h4" color="textSecondary">

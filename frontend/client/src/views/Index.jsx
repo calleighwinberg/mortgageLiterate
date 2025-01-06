@@ -46,7 +46,7 @@ const TCAs = () => {
         <List>
           {tcas.map((tca, idx) => (
             <ListItem key={idx} disablePadding>
-              <ListItemButton component="a" href={`/tcas/${tca._id}`}>
+              <ListItemButton component="a" href={`/tcas/${tca._id}/edit`}>
                 <ListItemText primary={tca.firstName} />
               </ListItemButton>
             </ListItem>
