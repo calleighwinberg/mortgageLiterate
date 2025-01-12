@@ -8,6 +8,8 @@ const CurrencyFormatDisplay = ({ value }) => {
       <CurrencyFormat
         value={value || ""}
         displayType={'text'} // Only display as text
+        decimalScale={2} // Ensure 2 decimal points
+        fixedDecimalScale={true}
         thousandSeparator
         prefix="$"
         renderText={value => value} // Render the value as plain text

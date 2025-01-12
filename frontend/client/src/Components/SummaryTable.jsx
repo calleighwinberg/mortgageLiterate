@@ -42,6 +42,12 @@ const SummaryTable = ({ tca, computedScenarios }) => {
             <TableCell>{tca.scenarios[1].term}</TableCell>
             <TableCell>{tca.scenarios[2].term}</TableCell>
           </TableRow>
+          <TableRow>
+            <TableCell>PI</TableCell>
+            <TableCell><CurrencyFormatDisplay value={computedScenarios[0].piti} /></TableCell>
+            <TableCell><CurrencyFormatDisplay value={computedScenarios[1].piPayment} /></TableCell>
+            <TableCell><CurrencyFormatDisplay value={computedScenarios[2].piPayment} /></TableCell>
+          </TableRow>
         </TableBody>
       </Table>
     </TableContainer>
