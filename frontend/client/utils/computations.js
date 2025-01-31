@@ -4,10 +4,10 @@ export const computePrices = (tca) => {
     const computedScenarios = tca.scenarios.map((scenario) => {
       return {
         loan: calculateLoan(scenario),
-        //payment: calculatePayment(scenario),
         piPayment: calculatePIPayment(scenario),
         piti: calculatePITIPayment(scenario),
-        cashToClose: calculateCashToClose(scenario),
+        ctc: calculateCashToClose(scenario),
+        points: calculatePoints(scenario),
       };
     });
 
@@ -15,13 +15,7 @@ export const computePrices = (tca) => {
   
     return computedScenarios;
   };
-    
-
   
-  // // Example computation functions (you'll need to replace these with your actual logic)
-  // const calculatePrice = (scenario) => {
-  //   return scenario.price; // Placeholder
-  // };
   
   const calculateLoan = (scenario) => {
     const loan = scenario.price - scenario.downPayment ;
@@ -47,8 +41,15 @@ export const computePrices = (tca) => {
     var pi = calculatePIPayment(scenario)
     return pi + scenario.mc.taxes + scenario.mc.hazIns + scenario.mc.pmi + scenario.mc.hoa
   };
+
+  const calculatePoints = (scenario) => {
+    return (scenario.cc.points * .01) * calculateLoan(scenario);
+    //return scenario.cc.points
+}
   
   const calculateCashToClose = (scenario) => {
-    return scenario.downPayment; // Placeholder
+    var ctc = scenario.downPayment + scenario.cc.aprCosts + scenario.cc.escrowFees + 
+              calculatePoints(scenario) - scenario.cc.contribution;
+    return ctc;
   };
   

@@ -6,48 +6,44 @@ import PercentageFormatDisplay from './PercentageFormatDisplay';
 const SummaryTable = ({ tca, computedScenarios }) => {
     console.log("tca passed to SummaryTable:", tca);
 
+    const rows = [
+      { label: 'Purchase Price', key: 'price', formatter: CurrencyFormatDisplay, source: 'tca' },
+      { label: 'Loan Amount', key: 'loan', formatter: CurrencyFormatDisplay, source: 'computedScenarios' },
+      { label: 'Interest Rate', key: 'rate', formatter: PercentageFormatDisplay, source: 'tca' },
+      { label: 'Term (months)', key: 'term', formatter: null, source: 'tca' },
+      { label: 'PI', key: 'piPayment', formatter: CurrencyFormatDisplay, source: 'computedScenarios' },
+      { label: 'piti', key: 'piti', formatter: CurrencyFormatDisplay, source: 'computedScenarios' },
+      { label: 'Points', key: 'points', formatter: CurrencyFormatDisplay, source: 'computedScenarios' },
+
+      { label: 'Cash to Close', key: 'ctc', formatter: CurrencyFormatDisplay, source: 'computedScenarios' },
+      { label: 'Taxes', key: 'taxes', formatter: CurrencyFormatDisplay, source: 'tca' },
+    ];
+
   return (
     <TableContainer component={Paper} sx={{ marginTop: 2 }}>
       <Table sx={{ minWidth: 650 }} aria-label="summary table">
-        <TableHead>
+      <TableHead>
           <TableRow>
             <TableCell />
-            <TableCell>{tca.scenarios[0].name}</TableCell>
-            <TableCell>{tca.scenarios[1].name}</TableCell>
-            <TableCell>{tca.scenarios[2].name}</TableCell>
+            {tca.scenarios.map((scenario, index) => (
+              <TableCell key={index}>{scenario.name}</TableCell>
+            ))}
           </TableRow>
         </TableHead>
         <TableBody>
-          <TableRow>
-            <TableCell>Purchase Price</TableCell>
-            <TableCell><CurrencyFormatDisplay value={tca.scenarios[0].price} /></TableCell>
-            <TableCell><CurrencyFormatDisplay value={tca.scenarios[1].price} /></TableCell>
-            <TableCell><CurrencyFormatDisplay value={tca.scenarios[2].price} /></TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Loan Amount</TableCell>
-            <TableCell>{computedScenarios[0].loan}</TableCell>
-            <TableCell>{computedScenarios[1].loan}</TableCell>
-            <TableCell>{computedScenarios[2].loan}</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Interest Rate</TableCell>
-            <TableCell><PercentageFormatDisplay value={tca.scenarios[0].rate} /></TableCell>
-            <TableCell><PercentageFormatDisplay value={tca.scenarios[1].rate} /></TableCell>
-            <TableCell><PercentageFormatDisplay value={tca.scenarios[2].rate} /></TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Term (months)</TableCell>
-            <TableCell>{tca.scenarios[0].term}</TableCell>
-            <TableCell>{tca.scenarios[1].term}</TableCell>
-            <TableCell>{tca.scenarios[2].term}</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>PI</TableCell>
-            <TableCell><CurrencyFormatDisplay value={computedScenarios[0].piti} /></TableCell>
-            <TableCell><CurrencyFormatDisplay value={computedScenarios[1].piPayment} /></TableCell>
-            <TableCell><CurrencyFormatDisplay value={computedScenarios[2].piPayment} /></TableCell>
-          </TableRow>
+          {rows.map(({ label, key, formatter: Formatter, source }) => (
+            <TableRow key={key}>
+              <TableCell>{label}</TableCell>
+              {tca.scenarios.map((_, index) => {
+                const value = source === 'tca' ? tca.scenarios[index][key] : computedScenarios[index][key];
+                return (
+                  <TableCell key={index}>
+                    {Formatter ? <Formatter value={value} /> : value}
+                  </TableCell>
+                );
+              })}
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </TableContainer>

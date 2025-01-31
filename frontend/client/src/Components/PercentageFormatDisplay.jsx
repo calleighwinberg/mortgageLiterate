@@ -10,7 +10,7 @@ const PercentageFormatDisplay = ({ value }) => {
         displayType={'text'} // Only display as text
         thousandSeparator
         suffix="%"
-        decimalScale={2} // Limit to 2 decimal places
+        decimalScale={3} // Limit to 3 decimal places
         renderText={value => value} // Render the value as plain text
       />
     );

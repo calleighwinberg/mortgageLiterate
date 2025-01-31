@@ -185,6 +185,20 @@ const Edit = () => {
                     inputComponent: CurrencyFormatCustom,
                 }}
             />
+            <TextField
+                label="Contributions"
+                name={`scenarios.${index}.cc.contribution`}
+                value={tca?.scenarios[index]?.cc?.contribution === 0 ? "" : tca?.scenarios[index]?.cc?.contribution}
+                onChange={handleInputChange}
+                onBlur={(e) => {
+                    if (!e.target.value) handleInputChange({ target: { name: e.target.name, value: 0 } });
+                }}
+                fullWidth
+                margin="normal"
+                InputProps={{
+                    inputComponent: CurrencyFormatCustom,
+                }}
+            />
             <Button type="submit" variant="contained" color="success" sx={{ mt: 2 }}>
                 Save Closing Costs
             </Button>
@@ -200,6 +214,48 @@ const Edit = () => {
                 label="HOA"
                 name={`scenarios.${index}.mc.hoa`}
                 value={tca?.scenarios[index]?.mc?.hoa === 0 ? "" : tca?.scenarios[index]?.mc?.hoa}
+                onChange={handleInputChange}
+                onBlur={(e) => {
+                    if (!e.target.value) handleInputChange({ target: { name: e.target.name, value: 0 } });
+                }}
+                fullWidth
+                margin="normal"
+                InputProps={{
+                    inputComponent: CurrencyFormatCustom,
+                }}
+            />
+            <TextField
+                label="Taxes"
+                name={`scenarios.${index}.mc.taxes`}
+                value={tca?.scenarios[index]?.mc?.taxes === 0 ? "" : tca?.scenarios[index]?.mc?.taxes}
+                onChange={handleInputChange}
+                onBlur={(e) => {
+                    if (!e.target.value) handleInputChange({ target: { name: e.target.name, value: 0 } });
+                }}
+                fullWidth
+                margin="normal"
+                InputProps={{
+                    inputComponent: CurrencyFormatCustom,
+                }}
+            />
+            <TextField
+                label="Hazard Insurance"
+                name={`scenarios.${index}.mc.hazIns`}
+                value={tca?.scenarios[index]?.mc?.hazIns === 0 ? "" : tca?.scenarios[index]?.mc?.hazIns}
+                onChange={handleInputChange}
+                onBlur={(e) => {
+                    if (!e.target.value) handleInputChange({ target: { name: e.target.name, value: 0 } });
+                }}
+                fullWidth
+                margin="normal"
+                InputProps={{
+                    inputComponent: CurrencyFormatCustom,
+                }}
+            />
+            <TextField
+                label="Mortgage Insurance"
+                name={`scenarios.${index}.mc.pmi`}
+                value={tca?.scenarios[index]?.mc?.hazIns === 0 ? "" : tca?.scenarios[index]?.mc?.pmi}
                 onChange={handleInputChange}
                 onBlur={(e) => {
                     if (!e.target.value) handleInputChange({ target: { name: e.target.name, value: 0 } });

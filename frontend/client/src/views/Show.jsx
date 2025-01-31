@@ -6,12 +6,13 @@ import {
 } from '@mui/material';
 import { computePrices } from '../../utils/computations';
 import SummaryTable from '../Components/SummaryTable';
+import PaymentModal from '../Components/PaymentModal';
 
 const Show = () => {
   const [tca, setTCA] = useState();
   const { tcaid } = useParams();
-  const navigate = useNavigate();  
-  
+  const navigate = useNavigate();
+
   const [computedScenarios, setComputedScenarios] = useState([]);
   const [openPaymentModal, setOpenPaymentModal] = useState(false);
   const [openClosingCostModal, setOpenClosingCostModal] = useState(false);
@@ -19,12 +20,12 @@ const Show = () => {
   useEffect(() => {
     console.log('getting tca')
     axios.get(`/tcas/${tcaid}`).then((res) => {
-      setTCA({...res.data.tca});
+      setTCA({ ...res.data.tca });
       console.log('tca fetched', res.data.tca)
     });
-    
+
   }, [tcaid]);
-  
+
   useEffect(() => {
     console.log('TCA state updated alone:', tca);  // This will log when the tca state changes
   }, [tca]);
@@ -49,25 +50,25 @@ const Show = () => {
   };
 
   return (
-    
+
     <Box sx={{
-        flex: 1,
-        p: 3,
-        marginTop: '64px', // Push content below navbar
+      flex: 1,
+      p: 3,
+      marginTop: '64px', // Push content below navbar
     }}>
       {tca ? (
         <>
 
-<Grid container spacing={3}>
-        {/* User and Author Info */}
-        <Grid item xs={12} md={9}>
-          <Typography variant="h3">Hi {tca.firstName},</Typography>
-          <Typography variant="h5" sx={{ color: '#ff8080' }}>
-            {tca.address}
-          </Typography>
-          <Typography>{tca.description}</Typography>
-        </Grid>
-        {/* <Grid item xs={12} md={3}>
+          <Grid container spacing={3}>
+            {/* User and Author Info */}
+            <Grid item xs={12} md={9}>
+              <Typography variant="h3">Hi {tca.firstName},</Typography>
+              <Typography variant="h5" sx={{ color: '#ff8080' }}>
+                {tca.address}
+              </Typography>
+              <Typography>{tca.description}</Typography>
+            </Grid>
+            {/* <Grid item xs={12} md={3}>
           <Typography>This report was created for you by</Typography>
           <Typography variant="h6" fontWeight="bold">
             {tca.author.username}
@@ -77,43 +78,43 @@ const Show = () => {
             <Typography>{tca.author.email}</Typography>
           </Box>
         </Grid> */}
-      </Grid>
+          </Grid>
 
-      {/* Summary and Table */}
-      <Box sx={{ marginTop: 3 }}>
-        <Box display="flex" alignItems="center" sx={{ backgroundColor: '#ff8080', padding: 2 }}>
-          <Typography variant="h5" sx={{ color: 'white' }}>Summary</Typography>
-          <Button
-            variant="contained"
-            sx={{ ml: 'auto', borderRadius: '50px', backgroundColor: '#fff', color: '#ff8080' }}
-            onClick={() => setOpenPaymentModal(true)}
-          >
-            More Info
-          </Button>
-        </Box>
-        
-        {computedScenarios && computedScenarios.length > 0 ? (
-          
-        <SummaryTable tca={tca} computedScenarios={computedScenarios} />
-      ) : (
-        <div>Loading...</div>
-      )}
-      </Box>
+          {/* Summary and Table */}
+          <Box sx={{ marginTop: 3 }}>
+            <Box display="flex" alignItems="center" sx={{ backgroundColor: '#ff8080', padding: 2 }}>
+              <Typography variant="h5" sx={{ color: 'white' }}>Summary</Typography>
+              <Button
+                variant="contained"
+                sx={{ ml: 'auto', borderRadius: '50px', backgroundColor: '#fff', color: '#ff8080' }}
+                onClick={() => setOpenPaymentModal(true)}
+              >
+                More Info
+              </Button>
+            </Box>
 
-      {/* Modals
-      <PaymentModal
-        open={openPaymentModal}
-        onClose={() => setOpenPaymentModal(false)}
-        tca={tca}
-        scenarios={scenarios}
-        onShowClosingCostModal={() => setOpenClosingCostModal(true)}
-      />
-      <ClosingCostModal
-        open={openClosingCostModal}
-        onClose={() => setOpenClosingCostModal(false)}
-        tca={tca}
-        scenarios={scenarios}
-      /> */}
+            {computedScenarios && computedScenarios.length > 0 ? (
+
+              <SummaryTable tca={tca} computedScenarios={computedScenarios} />
+            ) : (
+              <div>Loading...</div>
+            )}
+          </Box>
+
+
+          <PaymentModal
+            open={openPaymentModal}
+            onClose={() => setOpenPaymentModal(false)}
+            tca={tca}
+            computedScenarios={computedScenarios}
+            onShowClosingCostModal={() => setOpenClosingCostModal(true)}
+          />
+          {/* <ClosingCostModal
+            open={openClosingCostModal}
+            onClose={() => setOpenClosingCostModal(false)}
+            tca={tca}
+            scenarios={scenarios}
+          /> */}
 
 
 

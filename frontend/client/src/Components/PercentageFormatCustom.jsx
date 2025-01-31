@@ -2,7 +2,7 @@ import React from "react";
 import CurrencyFormat from "react-currency-format";
 import { TextField } from "@mui/material";
 
-const PercentageFormatCustom = React.forwardRef(function CurrencyFormatCustom(
+const PercentageFormatCustom = React.forwardRef(function PercentageFormatCustom(
     { onChange, name, value, ...other },
 ref
   ) {
@@ -14,7 +14,7 @@ ref
             thousandSeparator
             suffix="%"
             allowNegative={false}
-            decimalScale={2} // Limit to 2 decimal places
+            decimalScale={3} // Limit to 3 decimal places
             onValueChange={(values) => {
                 onChange({
                   target: {
