@@ -94,21 +94,29 @@ const Show = () => {
             </Box>
 
             {computedScenarios && computedScenarios.length > 0 ? (
-
-              <SummaryTable tca={tca} computedScenarios={computedScenarios} />
+              <>
+                <SummaryTable tca={tca} computedScenarios={computedScenarios} />
+                <PaymentModal
+                  open={openPaymentModal}
+                  onClose={() => setOpenPaymentModal(false)}
+                  tca={tca}
+                  computedScenarios={computedScenarios}
+                  onShowClosingCostModal={() => setOpenClosingCostModal(true)}
+                />
+              </>
             ) : (
               <div>Loading...</div>
             )}
           </Box>
 
 
-          <PaymentModal
+          {/* <PaymentModal
             open={openPaymentModal}
             onClose={() => setOpenPaymentModal(false)}
             tca={tca}
             computedScenarios={computedScenarios}
             onShowClosingCostModal={() => setOpenClosingCostModal(true)}
-          />
+          /> */}
           {/* <ClosingCostModal
             open={openClosingCostModal}
             onClose={() => setOpenClosingCostModal(false)}
