@@ -8,6 +8,7 @@ export const computePrices = (tca) => {
         piti: calculatePITIPayment(scenario),
         ctc: calculateCashToClose(scenario),
         points: calculatePoints(scenario),
+        ltv: calculateLTV(scenario),
       };
     });
 
@@ -48,8 +49,15 @@ export const computePrices = (tca) => {
 }
   
   const calculateCashToClose = (scenario) => {
-    var ctc = scenario.downPayment + scenario.cc.aprCosts + scenario.cc.escrowFees + 
-              calculatePoints(scenario) - scenario.cc.contribution;
+    var ctc = scenario.downPayment + scenario.cc.aprCosts + scenario.cc.escrowFees + scenario.cc.prepaids +
+              calculatePoints(scenario) - scenario.cc.contributions;
     return ctc;
-  };
+  }
+
+  const calculateLTV = (scenario) => {
+    var ltv = Math.round((calculateLoan(scenario) / scenario.price) * 100);
+    return ltv;
+  }
+  
+  ;
   

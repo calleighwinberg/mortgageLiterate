@@ -7,6 +7,7 @@ import {
 import { computePrices } from '../../utils/computations';
 import SummaryTable from '../Components/SummaryTable';
 import PaymentModal from '../Components/PaymentModal';
+import ClosingCostsModal from '../Components/ClosingCostsModel';
 
 const Show = () => {
   const [tca, setTCA] = useState();
@@ -16,6 +17,10 @@ const Show = () => {
   const [computedScenarios, setComputedScenarios] = useState([]);
   const [openPaymentModal, setOpenPaymentModal] = useState(false);
   const [openClosingCostModal, setOpenClosingCostModal] = useState(false);
+
+  const [activeTab, setActiveTab] = useState(null); // 'payment' or 'closingCosts'
+  const handleOpenModal = (tab) => setActiveTab(tab);
+  const handleCloseModal = () => setActiveTab(null);
 
   useEffect(() => {
     console.log('getting tca')
@@ -87,7 +92,7 @@ const Show = () => {
               <Button
                 variant="contained"
                 sx={{ ml: 'auto', borderRadius: '50px', backgroundColor: '#fff', color: '#ff8080' }}
-                onClick={() => setOpenPaymentModal(true)}
+                onClick={() => handleOpenModal('payment')}
               >
                 More Info
               </Button>
@@ -96,37 +101,30 @@ const Show = () => {
             {computedScenarios && computedScenarios.length > 0 ? (
               <>
                 <SummaryTable tca={tca} computedScenarios={computedScenarios} />
-                <PaymentModal
-                  open={openPaymentModal}
-                  onClose={() => setOpenPaymentModal(false)}
-                  tca={tca}
-                  computedScenarios={computedScenarios}
-                  onShowClosingCostModal={() => setOpenClosingCostModal(true)}
-                />
+                {activeTab === 'payment' && (
+                  <PaymentModal
+                    open={true}
+                    onClose={handleCloseModal}
+                    tca={tca}
+                    computedScenarios={computedScenarios}
+                    onShowClosingCostModal={() => handleOpenModal('closingCosts')} // Switch tabs
+                  />
+                )}
+
+                {activeTab === 'closingCosts' && (
+                  <ClosingCostsModal
+                    open={true}
+                    onClose={handleCloseModal}
+                    tca={tca}
+                    computedScenarios={computedScenarios}
+                    onShowPaymentModal={() => handleOpenModal('payment')} // Switch tabs
+                  />
+                )}
               </>
             ) : (
               <div>Loading...</div>
             )}
           </Box>
-
-
-          {/* <PaymentModal
-            open={openPaymentModal}
-            onClose={() => setOpenPaymentModal(false)}
-            tca={tca}
-            computedScenarios={computedScenarios}
-            onShowClosingCostModal={() => setOpenClosingCostModal(true)}
-          /> */}
-          {/* <ClosingCostModal
-            open={openClosingCostModal}
-            onClose={() => setOpenClosingCostModal(false)}
-            tca={tca}
-            scenarios={scenarios}
-          /> */}
-
-
-
-
           <Typography variant="h4" gutterBottom>
             {tca.firstName}
           </Typography>

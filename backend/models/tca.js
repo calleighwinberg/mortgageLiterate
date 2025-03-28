@@ -24,8 +24,8 @@ const TCASchema = new Schema({
                     aprCosts: { type: Number, default: 0 },
                     points: { type: Number, default: 0 },
                     escrowFees: { type: Number, default: 0 },
-                    noAPRcosts: { type: Number, default: 0 },
-                    contribution: { type: Number, default: 0 }
+                    prepaids: { type: Number, default: 0 },
+                    contributions: { type: Number, default: 0 }
                 },
                 mc: {
                     hoa: { type: Number, default: 0 },

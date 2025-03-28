@@ -1,23 +1,23 @@
 import React from 'react';
-import { IconButton, Box, Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, keyframes } from '@mui/material';
+import { IconButton, Box, Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close' ;
 import CurrencyFormatDisplay from './CurrencyFormatDisplay';
 import PercentageFormatDisplay from './PercentageFormatDisplay';
 
 
-const PaymentModal = ({ open, onClose, tca, computedScenarios, onShowClosingCostModal }) => {
+const ClosingCostsModal = ({ open, onClose, tca, computedScenarios, onShowPaymentModal }) => {
   const rows = [
-    { label: 'Purchase Price', key: 'price', formatter: CurrencyFormatDisplay, source: 'tca' },
-    { label: 'P&I', key: 'piPayment', formatter: CurrencyFormatDisplay, source: 'computedScenarios' },
-    { label: 'Hazard Insurance', key: 'mc.hazIns', formatter: CurrencyFormatDisplay, source: 'tca' },
-    { label: 'Taxes', key: 'mc.taxes', formatter: CurrencyFormatDisplay, source: 'tca' },
-    { label: 'PMI', key: 'mc.pmi', formatter: CurrencyFormatDisplay, source: 'tca' },
-    { label: 'HOA Fees', key: 'mc.hoa', formatter: CurrencyFormatDisplay, source: 'tca' },
-    { label: 'Monthly Payment', key: 'piti', formatter: CurrencyFormatDisplay, source: 'computedScenarios' },
+    { label: 'Down Payment', key: 'downPayment', formatter: CurrencyFormatDisplay, source: 'tca' },
+    { label: 'Loan To Value: ', key: 'ltv', formatter: PercentageFormatDisplay, source: 'computedScenarios' },
+    { label: 'Points', key: 'cc.points', formatter: CurrencyFormatDisplay, source: 'tca' },
+    { label: 'Title and Escrow', key: 'cc.escrowFees', formatter: CurrencyFormatDisplay, source: 'tca' },
+    { label: 'Prepaids', key: 'cc.prepaids', formatter: CurrencyFormatDisplay, source: 'tca' },
+    { label: 'Contributions', key: 'cc.contributions', formatter: CurrencyFormatDisplay, source: 'tca' },
+    { label: 'APR Fees', key: 'cc.aprCosts', formatter: CurrencyFormatDisplay, source: 'tca' },
   ];
 
   const getNestedValue = (scenario, key) => 
-    key.split('.').reduce((result, next) => result && result[next], scenario);
+  key.split('.').reduce((result, next) => result && result[next], scenario);
 
 
   return (
@@ -27,12 +27,12 @@ const PaymentModal = ({ open, onClose, tca, computedScenarios, onShowClosingCost
     <Box display="flex" justifyContent="space-between" alignItems="center">
       {/* Left-aligned "Closing Costs" Button */}
       <Box display="flex" gap={2}>
-      <Button sx={{
-        borderColor: "#ff8080", color: "white", borderRadius: "8px", borderWidth: "1px", backgroundColor: "#ff8080"}} variant="outlined">
+      <Button onClick={onShowPaymentModal} sx={{
+        borderColor: "#ff8080", color: "#ff8080", borderRadius: "8px", borderWidth: "1px"}} variant="outlined">
         Payment Breakdown
       </Button>
-      <Button onClick={onShowClosingCostModal} sx={{
-        borderColor: "#ff8080", color: "#ff8080", borderRadius: "8px", borderWidth: "1px"}} variant="outlined">
+      <Button sx={{
+        borderColor: "#ff8080", color: "white", borderRadius: "8px", borderWidth: "1px", backgroundColor: "#ff8080"}} variant="outlined">
         Closing Costs
       </Button>
       </Box>
@@ -44,7 +44,7 @@ const PaymentModal = ({ open, onClose, tca, computedScenarios, onShowClosingCost
     </Box>
     {/* Title Section */}
     <Box display="flex" alignItems="center" sx={{ backgroundColor: 'black', padding: 1, borderRadius: 1 }}>
-      <Typography variant="h5" sx={{ color: 'white' }}>Payment breakdown</Typography>
+      <Typography variant="h5" sx={{ color: 'white' }}>Closing Costs Breakdown</Typography>
     </Box>
 
     {/* Table Section */}
@@ -85,4 +85,4 @@ const PaymentModal = ({ open, onClose, tca, computedScenarios, onShowClosingCost
 
 }
 
-export default PaymentModal;
+export default ClosingCostsModal;
