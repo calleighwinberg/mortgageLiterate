@@ -15,8 +15,8 @@ const Show = () => {
   const navigate = useNavigate();
 
   const [computedScenarios, setComputedScenarios] = useState([]);
-  const [openPaymentModal, setOpenPaymentModal] = useState(false);
-  const [openClosingCostModal, setOpenClosingCostModal] = useState(false);
+  // const [openPaymentModal, setOpenPaymentModal] = useState(false);
+  // const [openClosingCostModal, setOpenClosingCostModal] = useState(false);
 
   const [activeTab, setActiveTab] = useState(null); // 'payment' or 'closingCosts'
   const handleOpenModal = (tab) => setActiveTab(tab);

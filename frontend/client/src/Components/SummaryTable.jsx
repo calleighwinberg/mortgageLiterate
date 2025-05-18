@@ -16,7 +16,6 @@ const SummaryTable = ({ tca, computedScenarios }) => {
       { label: 'Points', key: 'points', formatter: CurrencyFormatDisplay, source: 'computedScenarios' },
 
       { label: 'Cash to Close', key: 'ctc', formatter: CurrencyFormatDisplay, source: 'computedScenarios' },
-      { label: 'Taxes', key: 'taxes', formatter: CurrencyFormatDisplay, source: 'tca' },
     ];
 
   return (

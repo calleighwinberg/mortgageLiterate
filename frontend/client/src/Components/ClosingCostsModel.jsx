@@ -14,6 +14,7 @@ const ClosingCostsModal = ({ open, onClose, tca, computedScenarios, onShowPaymen
     { label: 'Prepaids', key: 'cc.prepaids', formatter: CurrencyFormatDisplay, source: 'tca' },
     { label: 'Contributions', key: 'cc.contributions', formatter: CurrencyFormatDisplay, source: 'tca' },
     { label: 'APR Fees', key: 'cc.aprCosts', formatter: CurrencyFormatDisplay, source: 'tca' },
+    { label: 'Cash to Close', key: 'ctc', formatter: CurrencyFormatDisplay, source: 'computedScenarios' },
   ];
 
   const getNestedValue = (scenario, key) => 
